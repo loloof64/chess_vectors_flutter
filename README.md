@@ -1,4 +1,4 @@
-# chess_vectors_flutter
+# chess vectors flutter
 
 Chess pieces vectors (movable and resizable) for Flutter.
 
@@ -79,4 +79,4 @@ class MyHomePage extends StatelessWidget {
 
 ## CREDITS
 
-This project is using the SVG definitions of Chess pieces from a [Wikimedia Commmons page](https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces)
+This project is using the SVG definitions of Chess pieces from a [Wikimedia Commons page](https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces)
