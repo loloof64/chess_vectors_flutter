@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'dart:ui' show Color, Offset, Path, Radius;
 
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:tuple/tuple.dart';
 
 
