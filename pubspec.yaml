@@ -1,0 +1,17 @@
+name: chess_vectors_flutter
+description: Chess pieces vectors (movable and resizable) for Flutter.
+version: 1.0.0
+author: Laurent Bernabe
+homepage:
+
+dependencies:
+  flutter:
+    sdk: flutter
+  tuple: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# The following section is specific to Flutter.
+flutter:
