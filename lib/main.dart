@@ -1,4 +1,5 @@
-import 'package:chess_vectors_flutter.dart';
+// Replace by 'package:chess_vectors_flutter.dart' in your project
+import 'chess_vectors_flutter.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(new MyApp());
