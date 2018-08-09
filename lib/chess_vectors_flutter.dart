@@ -59,7 +59,6 @@ class BlackPawn extends VectorBase {
             ]));
 }
 
-
 /// White Knight vector
 class WhiteKnight extends VectorBase {
   /// position (Offset) : default to Offset.zero
@@ -507,7 +506,6 @@ class WhiteQueen extends VectorBase {
             ]));
 }
 
-
 /// black queen vector
 class BlackQueen extends VectorBase {
   /// position (Offset) : default to Offset.zero
@@ -595,7 +593,6 @@ class BlackQueen extends VectorBase {
             ]));
 }
 
-
 /// white king vector
 class WhiteKing extends VectorBase {
   /// position (Offset) : default to Offset.zero
@@ -666,7 +663,6 @@ class WhiteKing extends VectorBase {
                       strokeLineMiterLimit: 4.0))
             ]));
 }
-
 
 /// black king vector
 class BlackKing extends VectorBase {

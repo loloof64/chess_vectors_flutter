@@ -4,7 +4,6 @@ import 'dart:ui' show Color, Offset, Path, Radius;
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
-
 /// Returns an equivalent VectorImagePainter but also setting its
 /// drawing zone and the original size of its image.
 VectorImagePainter painterWithDrawingZoneAndBaseImageSizeSet(
@@ -18,7 +17,6 @@ VectorImagePainter painterWithDrawingZoneAndBaseImageSizeSet(
 
 /// The base definition of a Vector Widget.
 abstract class VectorBase extends CustomPaint {
-
   /// Both painter and baseImagesSize are required
   /// painter (VectorImagePainter) : the Painter that helps use draw the Vector
   /// baseImageSize (double) : the size of the original image
@@ -196,7 +194,6 @@ abstract class VectorDrawableElement {
       Canvas targetCanvas, DrawingParameters parentDrawingParameters);
 }
 
-
 /// A Vector group element (<g>).
 class VectorImageGroup extends VectorDrawableElement {
   /// Children elements of this Group
@@ -372,7 +369,6 @@ class CloseElement extends PathElement {
   }
 }
 
-
 /// Path element of type Line
 class LineElement extends PathElement {
   /// Is it a relative move ?
@@ -403,11 +399,11 @@ class LineElement extends PathElement {
   }
 }
 
-
 /// Path element of type CubicCurve
 class CubicCurveElement extends PathElement {
   /// Is it a relative move ?
   bool relative;
+
   /// First control point
   Offset firstControlPoint;
 
@@ -459,7 +455,6 @@ class CubicCurveElement extends PathElement {
         ")";
   }
 }
-
 
 /// Path element of type Arc
 class ArcElement extends PathElement {
