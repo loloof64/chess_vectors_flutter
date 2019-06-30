@@ -1,5 +1,4 @@
-// Replace the following import by 'package:chess_vectors_flutter.dart' in your project
-import '../lib/chess_vectors_flutter.dart';
+import 'chess_vectors_flutter.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(new MyApp());
@@ -54,11 +53,6 @@ class MyHomePage extends StatelessWidget {
                     BlackKing(size: commonSize)
                   ],
                 ),
-                Row(
-                  children: <Widget>[
-                    WhiteRook(position: Offset(20.0, 5.0), size: 60.0)
-                  ],
-                )
               ],
             )));
   }

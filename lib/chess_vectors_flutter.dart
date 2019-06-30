@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 
 /// White pawn vector
 class WhitePawn extends VectorBase {
-  /// position (Offset) : default to Offset.zero
   /// size (double) : default to 45.0
-  WhitePawn({Offset position = Offset.zero, double size = 45.0})
+  WhitePawn({double size = 45.0})
       : super(
-            drawingZone: position & Size.square(size),
             baseImageSize: 45.0,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
@@ -33,11 +31,9 @@ class WhitePawn extends VectorBase {
 
 /// Black pawn vector
 class BlackPawn extends VectorBase {
-  /// position (Offset) : default to Offset.zero
   /// size (double) : default to 45.0
-  BlackPawn({Offset position = Offset.zero, double size = 45.0})
+  BlackPawn({double size = 45.0})
       : super(
-            drawingZone: position & Size.square(size),
             baseImageSize: 45.0,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
@@ -61,11 +57,9 @@ class BlackPawn extends VectorBase {
 
 /// White Knight vector
 class WhiteKnight extends VectorBase {
-  /// position (Offset) : default to Offset.zero
   /// size (double) : default to 45.0
-  WhiteKnight({Offset position = Offset.zero, double size = 45.0})
+  WhiteKnight({double size = 45.0})
       : super(
-          drawingZone: position & Size.square(size),
           baseImageSize: 45.0,
           painter: VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
             VectorImageGroup(
@@ -116,11 +110,9 @@ class WhiteKnight extends VectorBase {
 
 /// Black knight vector
 class BlackKnight extends VectorBase {
-  /// position (Offset) : default to Offset.zero
   /// size (double) : default to 45.0
-  BlackKnight({Offset position = Offset.zero, double size = 45.0})
+  BlackKnight({double size = 45.0})
       : super(
-          drawingZone: position & Size.square(size),
           baseImageSize: 45.0,
           painter: VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
             VectorImageGroup(
@@ -183,11 +175,9 @@ class BlackKnight extends VectorBase {
 
 /// White Bishop vector
 class WhiteBishop extends VectorBase {
-  /// position (Offset) : default to Offset.zero
   /// size (double) : default to 45.0
-  WhiteBishop({Offset position = Offset.zero, double size = 45.0})
+  WhiteBishop({double size = 45.0})
       : super(
-            drawingZone: position & Size.square(size),
             baseImageSize: 45.0,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
@@ -239,11 +229,9 @@ class WhiteBishop extends VectorBase {
 
 /// Black bishop vector
 class BlackBishop extends VectorBase {
-  /// position (Offset) : default to Offset.zero
   /// size (double) : default to 45.0
-  BlackBishop({Offset position = Offset.zero, double size = 45.0})
+  BlackBishop({double size = 45.0})
       : super(
-          drawingZone: position & Size.square(size),
           baseImageSize: 45.0,
           painter: VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
             VectorImageGroup(
@@ -294,11 +282,9 @@ class BlackBishop extends VectorBase {
 
 /// white rook vector
 class WhiteRook extends VectorBase {
-  /// position (Offset) : default to Offset.zero
   /// size (double) : default to 45.0
-  WhiteRook({Offset position = Offset.zero, double size = 45.0})
+  WhiteRook({double size = 45.0})
       : super(
-            drawingZone: position & Size.square(size),
             baseImageSize: 45.0,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
@@ -348,11 +334,9 @@ class WhiteRook extends VectorBase {
 
 /// black rook vector
 class BlackRook extends VectorBase {
-  /// position (Offset) : default to Offset.zero
   /// size (double) : default to 45.0
-  BlackRook({Offset position = Offset.zero, double size = 45.0})
+  BlackRook({double size = 45.0})
       : super(
-            drawingZone: position & Size.square(size),
             baseImageSize: 45.0,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
@@ -442,11 +426,9 @@ class BlackRook extends VectorBase {
 
 /// white queen vector
 class WhiteQueen extends VectorBase {
-  /// position (Offset) : default to Offset.zero
   /// size (double) : default to 45.0
-  WhiteQueen({Offset position = Offset.zero, double size = 45.0})
+  WhiteQueen({double size = 45.0})
       : super(
-            drawingZone: position & Size.square(size),
             baseImageSize: 45.0,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
@@ -508,11 +490,9 @@ class WhiteQueen extends VectorBase {
 
 /// black queen vector
 class BlackQueen extends VectorBase {
-  /// position (Offset) : default to Offset.zero
   /// size (double) : default to 45.0
-  BlackQueen({Offset position = Offset.zero, double size = 45.0})
+  BlackQueen({double size = 45.0})
       : super(
-            drawingZone: position & Size.square(size),
             baseImageSize: 45.0,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
@@ -595,11 +575,9 @@ class BlackQueen extends VectorBase {
 
 /// white king vector
 class WhiteKing extends VectorBase {
-  /// position (Offset) : default to Offset.zero
   /// size (double) : default to 45.0
-  WhiteKing({Offset position = Offset.zero, double size = 45.0})
+  WhiteKing({double size = 45.0})
       : super(
-            drawingZone: position & Size.square(size),
             baseImageSize: 45.0,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
@@ -666,11 +644,9 @@ class WhiteKing extends VectorBase {
 
 /// black king vector
 class BlackKing extends VectorBase {
-  /// position (Offset) : default to Offset.zero
   /// size (double) : default to 45.0
-  BlackKing({Offset position = Offset.zero, double size = 45.0})
+  BlackKing({double size = 45.0})
       : super(
-            drawingZone: position & Size.square(size),
             baseImageSize: 45.0,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[

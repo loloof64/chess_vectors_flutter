@@ -1,3 +1,7 @@
+## [1.0.8] - 30/06/2019.
+
+* Removed the offset property : one has to use Flutter Padding/Center/... widgets to achieve the same effects.
+
 ## [1.0.6] - 08/09/2018.
 
 * Improved library for publishing on Dart Pub.

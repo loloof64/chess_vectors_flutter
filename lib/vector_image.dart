@@ -4,13 +4,11 @@ import 'dart:ui' show Color, Offset, Path, Radius;
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
-/// Returns an equivalent VectorImagePainter but also setting its
-/// drawing zone and the original size of its image.
+/// Returns an equivalent VectorImagePainter but also setting size of its image.
 VectorImagePainter painterWithDrawingZoneAndBaseImageSizeSet(
-    VectorImagePainter originPainter, Rect zoneToSet, double baseImageSize) {
+    VectorImagePainter originPainter, double baseImageSize) {
   return VectorImagePainter(
     vectorDefinition: originPainter.vectorDefinition,
-    zoneWhereToDraw: zoneToSet,
     baseImageSize: baseImageSize,
   );
 }
@@ -23,11 +21,10 @@ abstract class VectorBase extends CustomPaint {
   VectorBase({
     @required VectorImagePainter painter,
     @required double baseImageSize,
-    Rect drawingZone,
   }) : super(
             painter: painterWithDrawingZoneAndBaseImageSizeSet(
-                painter, drawingZone, baseImageSize),
-            size: Size(drawingZone.width, drawingZone.height));
+                painter, baseImageSize),
+            size: Size.square(baseImageSize));
 }
 
 /// CustomPaint used for drawing Vector elements into a canvas.
@@ -38,26 +35,19 @@ class VectorImagePainter extends CustomPainter {
   /// Size of the original image
   double baseImageSize;
 
-  /// Zone where the Vector has to fit
-  Rect zoneWhereToDraw;
-
   /// Only vectorDefinition is required
   /// vectorDefinition (List of VectorDrawableElement) : Elements that compose the Vector to be drawn
-  /// baseImageSIze (double) : Size of the original image
-  /// zoneWhereToDraw (Rect) : Zone where the Vector has to fit
+  /// baseImageSize (double) : Size of the original image
   VectorImagePainter({
     @required this.vectorDefinition,
     this.baseImageSize,
-    this.zoneWhereToDraw,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
     canvas.save();
 
-    canvas.translate(zoneWhereToDraw.left, zoneWhereToDraw.top);
-    canvas.scale(zoneWhereToDraw.width / baseImageSize,
-        zoneWhereToDraw.height / baseImageSize);
+    canvas.scale(size.width / baseImageSize, size.height / baseImageSize);
 
     vectorDefinition.forEach((VectorDrawableElement vectorElement) {
       vectorElement.paintIntoCanvas(canvas, vectorElement.drawingParameters);

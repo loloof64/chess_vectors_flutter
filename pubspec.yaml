@@ -1,7 +1,6 @@
 name: chess_vectors_flutter
-description: Chess pieces vectors for Flutter. These vectors are custom widgets. They have their own size they can also be moved (position
-             property) inside their parent, and be resize (size property).
-version: 1.0.6
+description: Chess pieces vectors for Flutter. These vectors are custom widgets based on original SVG from Wikimedia Commons.
+version: 1.0.8
 author: Laurent Bernabe <laurent.bernabe@gmail.com>
 homepage: https://github.com/loloof64/chess_vectors_flutter
 
