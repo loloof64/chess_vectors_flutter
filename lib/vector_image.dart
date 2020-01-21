@@ -18,13 +18,15 @@ abstract class VectorBase extends CustomPaint {
   /// Both painter and baseImagesSize are required
   /// painter (VectorImagePainter) : the Painter that helps use draw the Vector
   /// baseImageSize (double) : the size of the original image
+  /// requestSize (double) : the wanted size
   VectorBase({
     @required VectorImagePainter painter,
     @required double baseImageSize,
+    @required double requestSize,
   }) : super(
             painter: painterWithDrawingZoneAndBaseImageSizeSet(
                 painter, baseImageSize),
-            size: Size.square(baseImageSize));
+            size: Size.square(requestSize));
 }
 
 /// CustomPaint used for drawing Vector elements into a canvas.

@@ -1,3 +1,7 @@
+## [1.0.12] - 21/01/2020.
+
+* Important bug fix : the requested size is taken into account.
+
 ## [1.0.10] - 01/07/2019.
 
 * More compliant to DartPub specification.

@@ -9,6 +9,7 @@ class WhitePawn extends VectorBase {
   WhitePawn({double size = 45.0})
       : super(
             baseImageSize: 45.0,
+            requestSize: size,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
               VectorImagePathDefinition(
@@ -35,6 +36,7 @@ class BlackPawn extends VectorBase {
   BlackPawn({double size = 45.0})
       : super(
             baseImageSize: 45.0,
+            requestSize: size,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
               VectorImagePathDefinition(
@@ -61,6 +63,7 @@ class WhiteKnight extends VectorBase {
   WhiteKnight({double size = 45.0})
       : super(
           baseImageSize: 45.0,
+          requestSize: size,
           painter: VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
             VectorImageGroup(
                 children: <VectorDrawableElement>[
@@ -114,6 +117,7 @@ class BlackKnight extends VectorBase {
   BlackKnight({double size = 45.0})
       : super(
           baseImageSize: 45.0,
+          requestSize: size,
           painter: VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
             VectorImageGroup(
                 children: <VectorDrawableElement>[
@@ -179,6 +183,7 @@ class WhiteBishop extends VectorBase {
   WhiteBishop({double size = 45.0})
       : super(
             baseImageSize: 45.0,
+            requestSize: size,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
               VectorImageGroup(
@@ -233,6 +238,7 @@ class BlackBishop extends VectorBase {
   BlackBishop({double size = 45.0})
       : super(
           baseImageSize: 45.0,
+          requestSize: size,
           painter: VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
             VectorImageGroup(
                 children: <VectorDrawableElement>[
@@ -286,6 +292,7 @@ class WhiteRook extends VectorBase {
   WhiteRook({double size = 45.0})
       : super(
             baseImageSize: 45.0,
+            requestSize: size,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
               VectorImageGroup(
@@ -338,6 +345,7 @@ class BlackRook extends VectorBase {
   BlackRook({double size = 45.0})
       : super(
             baseImageSize: 45.0,
+            requestSize: size,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
               VectorImageGroup(
@@ -430,6 +438,7 @@ class WhiteQueen extends VectorBase {
   WhiteQueen({double size = 45.0})
       : super(
             baseImageSize: 45.0,
+            requestSize: size,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
               VectorImageGroup(
@@ -494,6 +503,7 @@ class BlackQueen extends VectorBase {
   BlackQueen({double size = 45.0})
       : super(
             baseImageSize: 45.0,
+            requestSize: size,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
               VectorImageGroup(
@@ -579,6 +589,7 @@ class WhiteKing extends VectorBase {
   WhiteKing({double size = 45.0})
       : super(
             baseImageSize: 45.0,
+            requestSize: size,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
               VectorImageGroup(
@@ -648,6 +659,7 @@ class BlackKing extends VectorBase {
   BlackKing({double size = 45.0})
       : super(
             baseImageSize: 45.0,
+            requestSize: size,
             painter:
                 VectorImagePainter(vectorDefinition: <VectorDrawableElement>[
               VectorImageGroup(
