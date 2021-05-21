@@ -20,9 +20,9 @@ abstract class VectorBase extends CustomPaint {
   /// baseImageSize (double) : the size of the original image
   /// requestSize (double) : the wanted size
   VectorBase({
-    @required VectorImagePainter painter,
-    @required double baseImageSize,
-    @required double requestSize,
+    required VectorImagePainter painter,
+    required double baseImageSize,
+    required double requestSize,
   }) : super(
             painter: painterWithDrawingZoneAndBaseImageSizeSet(
                 painter, baseImageSize),
@@ -35,13 +35,13 @@ class VectorImagePainter extends CustomPainter {
   List<VectorDrawableElement> vectorDefinition;
 
   /// Size of the original image
-  double baseImageSize;
+  double? baseImageSize;
 
   /// Only vectorDefinition is required
   /// vectorDefinition (List of VectorDrawableElement) : Elements that compose the Vector to be drawn
   /// baseImageSize (double) : Size of the original image
   VectorImagePainter({
-    @required this.vectorDefinition,
+    required this.vectorDefinition,
     this.baseImageSize,
   });
 
@@ -49,7 +49,7 @@ class VectorImagePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.save();
 
-    canvas.scale(size.width / baseImageSize, size.height / baseImageSize);
+    canvas.scale(size.width / baseImageSize!, size.height / baseImageSize!);
 
     vectorDefinition.forEach((VectorDrawableElement vectorElement) {
       vectorElement.paintIntoCanvas(canvas, vectorElement.drawingParameters);
@@ -69,29 +69,29 @@ class VectorImagePainter extends CustomPainter {
 /// Note that it is allowed for a property that both definitions are null.
 DrawingParameters mergeDrawingParameters(
     DrawingParameters childDrawingParameters,
-    DrawingParameters parentDrawingParameters) {
+    DrawingParameters? parentDrawingParameters) {
   DrawingParameters usedDrawingParameters = DrawingParameters(
       fillColor:
-          childDrawingParameters.fillColor ?? parentDrawingParameters.fillColor,
+          childDrawingParameters.fillColor ?? parentDrawingParameters!.fillColor,
       strokeColor: childDrawingParameters.strokeColor ??
-          parentDrawingParameters.strokeColor,
+          parentDrawingParameters!.strokeColor,
       strokeWidth: childDrawingParameters.strokeWidth ??
-          parentDrawingParameters.strokeWidth,
+          parentDrawingParameters!.strokeWidth,
       strokeLineCap: childDrawingParameters.strokeLineCap ??
-          parentDrawingParameters.strokeLineCap,
+          parentDrawingParameters!.strokeLineCap,
       strokeLineJoin: childDrawingParameters.strokeLineJoin ??
-          parentDrawingParameters.strokeLineJoin,
+          parentDrawingParameters!.strokeLineJoin,
       strokeLineMiterLimit: childDrawingParameters.strokeLineMiterLimit ??
-          parentDrawingParameters.strokeLineMiterLimit,
+          parentDrawingParameters!.strokeLineMiterLimit,
       translate:
-          childDrawingParameters.translate ?? parentDrawingParameters.translate,
+          childDrawingParameters.translate ?? parentDrawingParameters!.translate,
       transformMatrixValues: childDrawingParameters.transformMatrix ??
-          parentDrawingParameters.transformMatrix);
+          parentDrawingParameters!.transformMatrix);
   return usedDrawingParameters;
 }
 
 /// Just a translation from List of double to a Float64List.
-Float64List convertListIntoMatrix4(List<double> matrixValues) {
+Float64List? convertListIntoMatrix4(List<double>? matrixValues) {
   if (matrixValues == null) return null;
   return Float64List.fromList(<double>[
     matrixValues[0],
@@ -116,28 +116,28 @@ Float64List convertListIntoMatrix4(List<double> matrixValues) {
 /// Drawing parameters for each element of the Vector
 class DrawingParameters {
   /// Fill color : null for the absence of fill color.
-  Color fillColor;
+  Color? fillColor;
 
   /// Stroke color: null for the absence of stroke color.
-  Color strokeColor;
+  Color? strokeColor;
 
   /// Stroke width
-  double strokeWidth;
+  double? strokeWidth;
 
   /// Stroke line cap : null for the absence of stroke line cap.
-  StrokeCap strokeLineCap;
+  StrokeCap? strokeLineCap;
 
   /// Stroke line join : null for the absence of stroke line join.
-  StrokeJoin strokeLineJoin;
+  StrokeJoin? strokeLineJoin;
 
   /// Stroke line miter limit
-  double strokeLineMiterLimit;
+  double? strokeLineMiterLimit;
 
   /// Translation of the element : null for the absence of translation.
-  Offset translate;
+  Offset? translate;
 
   /// Transform matrix of the element :  null for the absence of transform matrix.
-  Float64List transformMatrix;
+  Float64List? transformMatrix;
 
   /// Constructor : all values are optional.
   /// fillColor (Color) : Fill color : null for the absence of fill color.
@@ -156,7 +156,7 @@ class DrawingParameters {
       this.strokeLineJoin,
       this.translate,
       this.strokeLineMiterLimit,
-      List<double> transformMatrixValues})
+      List<double>? transformMatrixValues})
       : transformMatrix = convertListIntoMatrix4(transformMatrixValues);
 
   @override
@@ -177,34 +177,34 @@ class DrawingParameters {
 /// A drawable element of the Vector.
 abstract class VectorDrawableElement {
   /// Drawing parameters for this element
-  DrawingParameters drawingParameters;
+  DrawingParameters? drawingParameters;
 
   /// drawingParameters (DrawingParameters) : Drawing parameters for this element
   VectorDrawableElement(this.drawingParameters);
 
   void paintIntoCanvas(
-      Canvas targetCanvas, DrawingParameters parentDrawingParameters);
+      Canvas targetCanvas, DrawingParameters? parentDrawingParameters);
 }
 
 /// A Vector group element (<g>).
 class VectorImageGroup extends VectorDrawableElement {
   /// Children elements of this Group
-  List<VectorDrawableElement> children;
+  List<VectorDrawableElement>? children;
 
   /// children (List of VectorDrawableElement) : Children elements of this Group
   /// drawingParameters (DrawingParameters) : drawing parameters for this Group
   VectorImageGroup({
     this.children,
-    DrawingParameters drawingParameters,
+    DrawingParameters? drawingParameters,
   }) : super(drawingParameters);
 
   @override
   void paintIntoCanvas(
-      Canvas targetCanvas, DrawingParameters parentDrawingParameters) {
+      Canvas targetCanvas, DrawingParameters? parentDrawingParameters) {
     DrawingParameters usedDrawingParameters =
-        mergeDrawingParameters(drawingParameters, parentDrawingParameters);
+        mergeDrawingParameters(drawingParameters!, parentDrawingParameters);
 
-    children.forEach((VectorDrawableElement currentChild) {
+    children!.forEach((VectorDrawableElement currentChild) {
       currentChild.paintIntoCanvas(targetCanvas, usedDrawingParameters);
     });
   }
@@ -222,16 +222,16 @@ class VectorCircle extends VectorDrawableElement {
   /// radius (double) REQUIRED : Radius of the Circle
   /// drawingParameters (DrawingParameters) : drawing parameters for this Circle
   VectorCircle(
-      {@required this.position,
-      @required this.radius,
-      DrawingParameters drawingParameters})
+      {required this.position,
+      required this.radius,
+      DrawingParameters? drawingParameters})
       : super(drawingParameters);
 
   @override
   void paintIntoCanvas(
-      Canvas targetCanvas, DrawingParameters parentDrawingParameters) {
+      Canvas targetCanvas, DrawingParameters? parentDrawingParameters) {
     DrawingParameters usedDrawingParameters =
-        mergeDrawingParameters(drawingParameters, parentDrawingParameters);
+        mergeDrawingParameters(drawingParameters!, parentDrawingParameters);
 
     var commonPath = new Path()
       ..addOval(Rect.fromPoints(position.translate(-radius, -radius),
@@ -240,14 +240,14 @@ class VectorCircle extends VectorDrawableElement {
     if (usedDrawingParameters.fillColor != null) {
       var fillPathPaint = new Paint()
         ..style = PaintingStyle.fill
-        ..color = usedDrawingParameters.fillColor;
+        ..color = usedDrawingParameters.fillColor!;
       targetCanvas.drawPath(commonPath, fillPathPaint);
     }
 
     var strokePathPaint = new Paint()
       ..style = PaintingStyle.stroke
-      ..color = usedDrawingParameters.strokeColor
-      ..strokeWidth = usedDrawingParameters.strokeWidth;
+      ..color = usedDrawingParameters.strokeColor!
+      ..strokeWidth = usedDrawingParameters.strokeWidth!;
     targetCanvas.drawPath(commonPath, strokePathPaint);
   }
 }
@@ -260,24 +260,24 @@ class VectorImagePathDefinition extends VectorDrawableElement {
   /// path (string) REQUIRED : path definition ('d' attribute)
   /// drawingParameters (DrawingParameters) : drawing parameters for this Circle
   VectorImagePathDefinition({
-    @required String path,
-    DrawingParameters drawingParameters,
+    required String path,
+    DrawingParameters? drawingParameters,
   })  : pathElements = parsePath(path),
         super(drawingParameters);
 
   @override
   void paintIntoCanvas(
-      Canvas targetCanvas, DrawingParameters parentDrawingParameters) {
+      Canvas targetCanvas, DrawingParameters? parentDrawingParameters) {
     DrawingParameters usedDrawingParameters =
-        mergeDrawingParameters(drawingParameters, parentDrawingParameters);
+        mergeDrawingParameters(drawingParameters!, parentDrawingParameters);
 
     targetCanvas.save();
-    if (drawingParameters.transformMatrix != null) {
-      targetCanvas.transform(drawingParameters.transformMatrix);
+    if (drawingParameters!.transformMatrix != null) {
+      targetCanvas.transform(drawingParameters!.transformMatrix!);
     }
-    if (drawingParameters.translate != null) {
+    if (drawingParameters!.translate != null) {
       targetCanvas.translate(
-          drawingParameters.translate.dx, drawingParameters.translate.dy);
+          drawingParameters!.translate!.dx, drawingParameters!.translate!.dy);
     }
 
     var commonPath = new Path();
@@ -288,23 +288,23 @@ class VectorImagePathDefinition extends VectorDrawableElement {
     if (usedDrawingParameters.fillColor != null) {
       var fillPathPaint = new Paint()
         ..style = PaintingStyle.fill
-        ..color = usedDrawingParameters.fillColor;
+        ..color = usedDrawingParameters.fillColor!;
       targetCanvas.drawPath(commonPath, fillPathPaint);
     }
 
     var strokePathPaint = new Paint()
       ..style = PaintingStyle.stroke
-      ..color = usedDrawingParameters.strokeColor
-      ..strokeWidth = usedDrawingParameters.strokeWidth;
+      ..color = usedDrawingParameters.strokeColor!
+      ..strokeWidth = usedDrawingParameters.strokeWidth!;
     if (usedDrawingParameters.strokeLineCap != null) {
-      strokePathPaint.strokeCap = usedDrawingParameters.strokeLineCap;
+      strokePathPaint.strokeCap = usedDrawingParameters.strokeLineCap!;
     }
     if (usedDrawingParameters.strokeLineJoin != null) {
-      strokePathPaint.strokeJoin = usedDrawingParameters.strokeLineJoin;
+      strokePathPaint.strokeJoin = usedDrawingParameters.strokeLineJoin!;
     }
     if (usedDrawingParameters.strokeLineMiterLimit != null) {
       strokePathPaint.strokeMiterLimit =
-          usedDrawingParameters.strokeLineMiterLimit;
+          usedDrawingParameters.strokeLineMiterLimit!;
     }
     targetCanvas.drawPath(commonPath, strokePathPaint);
 
@@ -328,7 +328,7 @@ class MoveElement extends PathElement {
 
   /// moveParams (Offset) REQUIRED : Move x and y if not relative, otherwise move dx and dy.
   /// relative (bool) REQUIRED : Is it a relative move ?
-  MoveElement({@required this.moveParams, @required this.relative});
+  MoveElement({required this.moveParams, required this.relative});
 
   @override // ignore: missing_function_body
   void addToPath(Path path) {
@@ -371,7 +371,7 @@ class LineElement extends PathElement {
 
   /// lineParams (Offset) REQUIRED : Line x and y if not relative, otherwise line dx and dy.
   /// relative (bool) REQUIRED :Is it a relative line ?
-  LineElement({@required this.lineParams, @required this.relative});
+  LineElement({required this.lineParams, required this.relative});
 
   @override
   void addToPath(Path path) {
@@ -410,10 +410,10 @@ class CubicCurveElement extends PathElement {
   /// secondControlPoint (Offset) REQUIRED : Second control point
   /// endPoint (Offset) REQUIRED : end point
   CubicCurveElement({
-    @required this.relative,
-    @required this.firstControlPoint,
-    @required this.secondControlPoint,
-    @required this.endPoint,
+    required this.relative,
+    required this.firstControlPoint,
+    required this.secondControlPoint,
+    required this.endPoint,
   });
 
   @override
@@ -467,10 +467,10 @@ class ArcElement extends PathElement {
   /// xAxisRotation (double) REQUIRED : Rotation along x axis
   /// center (Offset) REQUIRED : Center
   ArcElement(
-      {@required this.relative,
-      @required this.radius,
-      @required this.xAxisRotation,
-      @required this.center});
+      {required this.relative,
+      required this.radius,
+      required this.xAxisRotation,
+      required this.center});
 
   @override
   void addToPath(Path path) {
@@ -503,28 +503,28 @@ class ArcElement extends PathElement {
 /// Transform a path definition (value of 'd' attribute in SVG <path> tag) into
 /// a List of PathElement.
 List<PathElement> parsePath(String pathStr) {
-  Tuple2<PathElement, String> interpretCommand(
+  Tuple2<PathElement, String>? interpretCommand(
       RegExp commandRegex, String input) {
     var commandInterpretation = commandRegex.firstMatch(input);
     if (commandInterpretation == null) return null;
 
-    var commandType = commandInterpretation.group(1);
+    var commandType = commandInterpretation.group(1)!;
     var relativeCommand = commandType.toLowerCase() == commandType;
     switch (commandType) {
       case 'M':
       case 'm':
         var element = MoveElement(
             relative: relativeCommand,
-            moveParams: Offset(double.parse(commandInterpretation.group(2)),
-                double.parse(commandInterpretation.group(3))));
+            moveParams: Offset(double.parse(commandInterpretation.group(2)!),
+                double.parse(commandInterpretation.group(3)!)));
         var remainingPathStr = input.substring(commandInterpretation.end);
         return Tuple2<PathElement, String>(element, remainingPathStr);
       case 'L':
       case 'l':
         var element = LineElement(
             relative: relativeCommand,
-            lineParams: Offset(double.parse(commandInterpretation.group(2)),
-                double.parse(commandInterpretation.group(3))));
+            lineParams: Offset(double.parse(commandInterpretation.group(2)!),
+                double.parse(commandInterpretation.group(3)!)));
         var remainingPathStr = input.substring(commandInterpretation.end);
         return Tuple2<PathElement, String>(element, remainingPathStr);
       case 'c':
@@ -532,24 +532,24 @@ List<PathElement> parsePath(String pathStr) {
         var element = CubicCurveElement(
             relative: relativeCommand,
             firstControlPoint: Offset(
-                double.parse(commandInterpretation.group(2)),
-                double.parse(commandInterpretation.group(3))),
+                double.parse(commandInterpretation.group(2)!),
+                double.parse(commandInterpretation.group(3)!)),
             secondControlPoint: Offset(
-                double.parse(commandInterpretation.group(4)),
-                double.parse(commandInterpretation.group(5))),
-            endPoint: Offset(double.parse(commandInterpretation.group(6)),
-                double.parse(commandInterpretation.group(7))));
+                double.parse(commandInterpretation.group(4)!),
+                double.parse(commandInterpretation.group(5)!)),
+            endPoint: Offset(double.parse(commandInterpretation.group(6)!),
+                double.parse(commandInterpretation.group(7)!)));
         var remainingPathStr = input.substring(commandInterpretation.end);
         return Tuple2<PathElement, String>(element, remainingPathStr);
       case 'a':
       case 'A':
         var element = ArcElement(
             relative: relativeCommand,
-            radius: Offset(double.parse(commandInterpretation.group(2)),
-                double.parse(commandInterpretation.group(3))),
-            center: Offset(double.parse(commandInterpretation.group(7)),
-                double.parse(commandInterpretation.group(8))),
-            xAxisRotation: double.parse(commandInterpretation.group(4)));
+            radius: Offset(double.parse(commandInterpretation.group(2)!),
+                double.parse(commandInterpretation.group(3)!)),
+            center: Offset(double.parse(commandInterpretation.group(7)!),
+                double.parse(commandInterpretation.group(8)!)),
+            xAxisRotation: double.parse(commandInterpretation.group(4)!));
         var remainingPathStr = input.substring(commandInterpretation.end);
         return Tuple2<PathElement, String>(element, remainingPathStr);
       case 'z':
