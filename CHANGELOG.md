@@ -1,3 +1,7 @@
+## [1.0.14] - 06/05/2021.
+
+* Migrated to null safety, thanks to daniel-mf.
+
 ## [1.0.12] - 21/01/2020.
 
 * Important bug fix : the requested size is taken into account.
