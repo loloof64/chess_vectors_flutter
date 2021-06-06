@@ -1,4 +1,8 @@
-## [1.0.14] - 06/05/2021.
+## [1.0.16] - 06/06/2021.
+
+* Each piece can be set a different fill and/or stroke color, thanks to daniel-mf.
+
+## [1.0.14] - 05/06/2021.
 
 * Migrated to null safety, thanks to daniel-mf.
 

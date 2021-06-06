@@ -6,7 +6,8 @@ These vectors are custom widgets based on Wikimedia commons Svg. You can customi
 ## Getting Started
 
 Add whatever piece widget you want to your components tree :
-* size property takes a double value for defining the piece side size (same width and height).
+* size property takes a double value for defining the piece side size (same width and height),
+* you can change the stroke and fill color for each piece (thanks to daniel-mf).
 
 ## CREDITS
 

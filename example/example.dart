@@ -35,7 +35,14 @@ class MyHomePage extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    WhitePawn(size: commonSize),
+                    WhitePawn(
+                      size: commonSize,
+                      // You can also change fill color .
+                      fillColor: Colors.blue,
+
+                      // You can also change stroke color .
+                      strokeColor: Colors.red,
+                    ),
                     WhiteKnight(size: commonSize),
                     WhiteBishop(size: commonSize),
                     WhiteRook(size: commonSize),
