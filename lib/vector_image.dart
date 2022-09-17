@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'dart:ui' show Color, Offset, Path, Radius;
 
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
@@ -71,8 +70,8 @@ DrawingParameters mergeDrawingParameters(
     DrawingParameters childDrawingParameters,
     DrawingParameters? parentDrawingParameters) {
   DrawingParameters usedDrawingParameters = DrawingParameters(
-      fillColor:
-          childDrawingParameters.fillColor ?? parentDrawingParameters!.fillColor,
+      fillColor: childDrawingParameters.fillColor ??
+          parentDrawingParameters!.fillColor,
       strokeColor: childDrawingParameters.strokeColor ??
           parentDrawingParameters!.strokeColor,
       strokeWidth: childDrawingParameters.strokeWidth ??
@@ -83,8 +82,8 @@ DrawingParameters mergeDrawingParameters(
           parentDrawingParameters!.strokeLineJoin,
       strokeLineMiterLimit: childDrawingParameters.strokeLineMiterLimit ??
           parentDrawingParameters!.strokeLineMiterLimit,
-      translate:
-          childDrawingParameters.translate ?? parentDrawingParameters!.translate,
+      translate: childDrawingParameters.translate ??
+          parentDrawingParameters!.translate,
       transformMatrixValues: childDrawingParameters.transformMatrix ??
           parentDrawingParameters!.transformMatrix);
   return usedDrawingParameters;
