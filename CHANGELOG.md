@@ -1,3 +1,7 @@
+## [1.0.18] - 17/08/2022.
+
+* Source code formatting improvements.
+
 ## [1.0.16] - 06/06/2021.
 
 * Each piece can be set a different fill and/or stroke color, thanks to daniel-mf.
