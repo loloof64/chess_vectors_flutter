@@ -11,3 +11,8 @@ ios/Runner/GeneratedPluginRegistrant.*
 
 **/*.iml
 .idea/
+
+android/
+windows/
+linux/
+test/

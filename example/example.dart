@@ -29,7 +29,7 @@ class MyHomePage extends StatelessWidget {
         ),
         body: Container(
             decoration: BoxDecoration(
-              color: Colors.red,
+              color: Colors.green,
             ),
             child: Column(
               children: <Widget>[
@@ -48,7 +48,6 @@ class MyHomePage extends StatelessWidget {
                     WhiteRook(size: commonSize),
                     WhiteQueen(size: commonSize),
                     WhiteKing(size: commonSize),
-                    Test(size: commonSize),
                   ],
                 ),
                 Row(
@@ -59,7 +58,6 @@ class MyHomePage extends StatelessWidget {
                     BlackRook(size: commonSize),
                     BlackQueen(size: commonSize),
                     BlackKing(size: commonSize),
-                    Test(size: commonSize),
                   ],
                 ),
               ],
