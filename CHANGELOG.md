@@ -1,3 +1,7 @@
+## [1.1.0] - 24/11/2023.
+
+* Added commands 'H' and 'V' for Svg paths.
+
 ## [1.0.18] - 17/08/2022.
 
 * Source code formatting improvements.
