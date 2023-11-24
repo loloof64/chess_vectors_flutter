@@ -3,6 +3,40 @@ library chess_vectors_flutter;
 import 'package:chess_vectors_flutter/vector_image.dart';
 import 'package:flutter/material.dart';
 
+class Test extends VectorBase {
+  final fillColor;
+  final strokeColor;
+
+  Test({
+    double size = 45.0,
+    this.fillColor = Colors.white,
+    this.strokeColor = Colors.black,
+  }) : super(
+          baseImageSize: 45.0,
+          requestSize: size,
+          painter: VectorImagePainter(
+            vectorDefinition: <VectorDrawableElement>[
+              VectorImagePathDefinition(
+                path: "M 28.408,9.22 H 32.624 V 5.825000000000001 H 39.42 V "
+                    "15.120000000000001 L 33.92,19.363 V 31.22 L 38.14,35.441 V 40.521 "
+                    "H 41.929 V 46.45 H 8.07 V 40.521 H 11.864 V 35.441 L "
+                    "16.11,31.220000000000002 V 19.363000000000003 L 10.602,15.120000000000003 "
+                    "V 5.825000000000003 H 17.376 V 9.220000000000002 H 21.618000000000002 "
+                    "V 5.825000000000003 H 28.408 z",
+                drawingParameters: DrawingParameters(
+                  fillColor: fillColor,
+                  strokeColor: strokeColor,
+                  strokeWidth: 1.5,
+                  strokeLineCap: StrokeCap.round,
+                  strokeLineJoin: StrokeJoin.miter,
+                  strokeLineMiterLimit: 4.0,
+                ),
+              ),
+            ],
+          ),
+        );
+}
+
 /// White pawn vector
 class WhitePawn extends VectorBase {
   final fillColor;

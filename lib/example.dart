@@ -1,4 +1,4 @@
-import '../lib/chess_vectors_flutter.dart'; // adapt import
+import 'chess_vectors_flutter.dart'; // adapt import
 import 'package:flutter/material.dart';
 
 void main() => runApp(new MyApp());
@@ -48,7 +48,7 @@ class MyHomePage extends StatelessWidget {
                     WhiteRook(size: commonSize),
                     WhiteQueen(size: commonSize),
                     WhiteKing(size: commonSize),
-                    Test(size: commonSize),
+                    Test(size: commonSize,)
                   ],
                 ),
                 Row(
@@ -59,7 +59,7 @@ class MyHomePage extends StatelessWidget {
                     BlackRook(size: commonSize),
                     BlackQueen(size: commonSize),
                     BlackKing(size: commonSize),
-                    Test(size: commonSize),
+                    Test(size: commonSize,)
                   ],
                 ),
               ],

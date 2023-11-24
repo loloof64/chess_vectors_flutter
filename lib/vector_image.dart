@@ -315,32 +315,50 @@ class VectorImagePathDefinition extends VectorDrawableElement {
 abstract class PathElement {
   /// add the given path to the PathElement
   void addToPath(Path path);
+
+  /// gets the end point of the path element
+  Offset get end;
 }
 
 /// Path element of type MoveTo
 class MoveElement extends PathElement {
+  /// Current path starting point
+  Offset startPoint;
+
   /// Is it a relative move ?
   bool relative;
 
   /// Move x and y if not relative, otherwise move dx and dy.
   Offset moveParams;
 
+  /// startPoint (Offset) REQUIRED
   /// moveParams (Offset) REQUIRED : Move x and y if not relative, otherwise move dx and dy.
   /// relative (bool) REQUIRED : Is it a relative move ?
-  MoveElement({required this.moveParams, required this.relative});
+  MoveElement({
+    required this.startPoint,
+    required this.moveParams,
+    required this.relative,
+  });
 
   @override // ignore: missing_function_body
   void addToPath(Path path) {
     if (relative) {
       path.relativeMoveTo(moveParams.dx, moveParams.dy);
+      return;
     } else {
       path.moveTo(moveParams.dx, moveParams.dy);
     }
   }
 
   @override
+  Offset get end => relative
+      ? Offset(startPoint.dx + moveParams.dx, startPoint.dy + moveParams.dy)
+      : Offset(moveParams.dx, moveParams.dy);
+
+  @override
   String toString() {
     return "MoveElement("
+        "startPoint = $startPoint, "
         "relative = $relative, "
         "moveParams = $moveParams"
         ")";
@@ -355,6 +373,9 @@ class CloseElement extends PathElement {
   }
 
   @override
+  Offset get end => Offset.infinite;
+
+  @override
   String toString() {
     return "CloseElement()";
   }
@@ -362,15 +383,23 @@ class CloseElement extends PathElement {
 
 /// Path element of type Line
 class LineElement extends PathElement {
+  /// Current path starting point
+  Offset startPoint;
+
   /// Is it a relative move ?
   bool relative;
 
   /// Line x and y if not relative, otherwise move dx and dy.
   Offset lineParams;
 
+  /// startPoint (Offset) REQUIRED
   /// lineParams (Offset) REQUIRED : Line x and y if not relative, otherwise line dx and dy.
   /// relative (bool) REQUIRED :Is it a relative line ?
-  LineElement({required this.lineParams, required this.relative});
+  LineElement({
+    required this.startPoint,
+    required this.lineParams,
+    required this.relative,
+  });
 
   @override
   void addToPath(Path path) {
@@ -382,8 +411,14 @@ class LineElement extends PathElement {
   }
 
   @override
+  Offset get end => relative
+      ? Offset(startPoint.dx + lineParams.dx, startPoint.dy + lineParams.dy)
+      : Offset(lineParams.dx, lineParams.dy);
+
+  @override
   String toString() {
     return "LineElement("
+        "startPoint = $startPoint, "
         "relative = $relative, "
         "lineParams = $lineParams"
         ")";
@@ -392,6 +427,9 @@ class LineElement extends PathElement {
 
 /// Path element of type CubicCurve
 class CubicCurveElement extends PathElement {
+  /// Current path starting point
+  Offset startPoint;
+
   /// Is it a relative move ?
   bool relative;
 
@@ -404,11 +442,13 @@ class CubicCurveElement extends PathElement {
   /// End point
   Offset endPoint;
 
+  /// startPoint (Offset) REQUIRED
   /// relative (bool) REQUIRED : Is it a relative move ?
   /// firstControlPoint (Offset) REQUIRED : First control point
   /// secondControlPoint (Offset) REQUIRED : Second control point
   /// endPoint (Offset) REQUIRED : end point
   CubicCurveElement({
+    required this.startPoint,
     required this.relative,
     required this.firstControlPoint,
     required this.secondControlPoint,
@@ -437,8 +477,14 @@ class CubicCurveElement extends PathElement {
   }
 
   @override
+  Offset get end => relative
+      ? Offset(startPoint.dx + endPoint.dx, startPoint.dy + endPoint.dy)
+      : Offset(endPoint.dx, endPoint.dy);
+
+  @override
   String toString() {
     return "CubicCurveElement("
+        "startPoint = $startPoint, "
         "relative = $relative, "
         "firstControlPoint = $firstControlPoint,"
         "secondControlPoint = $secondControlPoint,"
@@ -449,6 +495,9 @@ class CubicCurveElement extends PathElement {
 
 /// Path element of type Arc
 class ArcElement extends PathElement {
+  /// Current path starting point
+  Offset startPoint;
+
   /// Is it a relative move ?
   bool relative;
 
@@ -458,30 +507,32 @@ class ArcElement extends PathElement {
   /// Rotation along X axis
   double xAxisRotation;
 
-  /// Center
-  Offset center;
+  /// Arc end
+  Offset arcEnd;
 
+  /// startPoint (Offset) REQUIRED
   /// relative (bool) REQUIRED : Is it a relative move ?
   /// radius (Offset) REQUIRED : Radius
   /// xAxisRotation (double) REQUIRED : Rotation along x axis
-  /// center (Offset) REQUIRED : Center
+  /// arcEnd (Offset) REQUIRED : Arc end point
   ArcElement(
-      {required this.relative,
+      {required this.startPoint,
+      required this.relative,
       required this.radius,
       required this.xAxisRotation,
-      required this.center});
+      required this.arcEnd});
 
   @override
   void addToPath(Path path) {
     if (relative) {
       path.relativeArcToPoint(
-        center,
+        arcEnd,
         rotation: xAxisRotation,
         radius: Radius.elliptical(radius.dx, radius.dy),
       );
     } else {
       path.arcToPoint(
-        center,
+        arcEnd,
         rotation: xAxisRotation,
         radius: Radius.elliptical(radius.dx, radius.dy),
       );
@@ -489,21 +540,112 @@ class ArcElement extends PathElement {
   }
 
   @override
+  Offset get end => relative
+      ? Offset(startPoint.dx + arcEnd.dx, startPoint.dy + arcEnd.dy)
+      : Offset(arcEnd.dx, arcEnd.dy);
+
+  @override
   String toString() {
     return "ArcElement("
+        "startPoint = $startPoint, "
         "relative = $relative, "
         "radius = $radius,"
         "xAxisRotation = $xAxisRotation,"
-        "center = $center"
+        "arcEnd = $arcEnd"
         ")";
+  }
+}
+
+/// An horizontal line element
+class HorizontalLineElement extends PathElement {
+  /// Current path starting point
+  Offset startPoint;
+
+  /// Is it a relative move ?
+  bool relative;
+
+  /// target x
+  double targetX;
+
+  /// startPoint (Offset) REQUIRED
+  /// relative (bool) REQUIRED : Is it a relative move ?
+  /// targetX (double) REQUIRED
+  HorizontalLineElement({
+    required this.startPoint,
+    required this.relative,
+    required this.targetX,
+  });
+
+  @override
+  void addToPath(Path path) {
+    if (relative) {
+      path.relativeLineTo(targetX, 0);
+    } else {
+      path.lineTo(targetX, startPoint.dy);
+    }
+  }
+
+  @override
+  Offset get end => relative
+      ? Offset(startPoint.dx + targetX, startPoint.dy)
+      : Offset(targetX, startPoint.dy);
+
+  @override
+  String toString() {
+    return "HorizontalLineElement("
+        "startPoint = $startPoint, "
+        "targetX = $targetX)";
+  }
+}
+
+/// A vertical line element
+class VerticalLineElement extends PathElement {
+  /// Current path starting point
+  Offset startPoint;
+
+  /// Is it a relative move ?
+  bool relative;
+
+  /// target y
+  double targetY;
+
+  /// startPoint (Offset) REQUIRED
+  /// relative (bool) REQUIRED : Is it a relative move ?
+  /// targetY (double) REQUIRED
+  VerticalLineElement({
+    required this.startPoint,
+    required this.relative,
+    required this.targetY,
+  });
+
+  @override
+  void addToPath(Path path) {
+    if (relative) {
+      path.relativeLineTo(0, targetY);
+    } else {
+      path.lineTo(startPoint.dx, targetY);
+    }
+  }
+
+  @override
+  Offset get end => relative
+      ? Offset(startPoint.dx, startPoint.dy + targetY)
+      : Offset(startPoint.dx, targetY);
+
+  @override
+  String toString() {
+    return "VerticalLineElement("
+        "startPoint = $startPoint, "
+        "targetY = $targetY)";
   }
 }
 
 /// Transform a path definition (value of 'd' attribute in SVG <path> tag) into
 /// a List of PathElement.
 List<PathElement> parsePath(String pathStr) {
-  Tuple2<PathElement, String>? interpretCommand(
-      RegExp commandRegex, String input) {
+  var startPoint = Offset.zero;
+  Tuple3<PathElement, String, Offset>? interpretCommand(
+      RegExp commandRegex, String input, Offset startPoint) {
     var commandInterpretation = commandRegex.firstMatch(input);
     if (commandInterpretation == null) return null;
 
@@ -513,22 +655,29 @@ List<PathElement> parsePath(String pathStr) {
       case 'M':
       case 'm':
         var element = MoveElement(
+            startPoint: startPoint,
             relative: relativeCommand,
             moveParams: Offset(double.parse(commandInterpretation.group(2)!),
                 double.parse(commandInterpretation.group(3)!)));
+        startPoint = element.end;
         var remainingPathStr = input.substring(commandInterpretation.end);
-        return Tuple2<PathElement, String>(element, remainingPathStr);
+        return Tuple3<PathElement, String, Offset>(
+            element, remainingPathStr, element.end);
       case 'L':
       case 'l':
         var element = LineElement(
+            startPoint: startPoint,
             relative: relativeCommand,
             lineParams: Offset(double.parse(commandInterpretation.group(2)!),
                 double.parse(commandInterpretation.group(3)!)));
+        startPoint = element.end;
         var remainingPathStr = input.substring(commandInterpretation.end);
-        return Tuple2<PathElement, String>(element, remainingPathStr);
+        return Tuple3<PathElement, String, Offset>(
+            element, remainingPathStr, element.end);
       case 'c':
       case 'C':
         var element = CubicCurveElement(
+            startPoint: startPoint,
             relative: relativeCommand,
             firstControlPoint: Offset(
                 double.parse(commandInterpretation.group(2)!),
@@ -538,24 +687,50 @@ List<PathElement> parsePath(String pathStr) {
                 double.parse(commandInterpretation.group(5)!)),
             endPoint: Offset(double.parse(commandInterpretation.group(6)!),
                 double.parse(commandInterpretation.group(7)!)));
+        startPoint = element.end;
         var remainingPathStr = input.substring(commandInterpretation.end);
-        return Tuple2<PathElement, String>(element, remainingPathStr);
+        return Tuple3<PathElement, String, Offset>(
+            element, remainingPathStr, element.end);
       case 'a':
       case 'A':
         var element = ArcElement(
+            startPoint: startPoint,
             relative: relativeCommand,
             radius: Offset(double.parse(commandInterpretation.group(2)!),
                 double.parse(commandInterpretation.group(3)!)),
-            center: Offset(double.parse(commandInterpretation.group(7)!),
+            arcEnd: Offset(double.parse(commandInterpretation.group(7)!),
                 double.parse(commandInterpretation.group(8)!)),
             xAxisRotation: double.parse(commandInterpretation.group(4)!));
+        startPoint = element.end;
         var remainingPathStr = input.substring(commandInterpretation.end);
-        return Tuple2<PathElement, String>(element, remainingPathStr);
+        return Tuple3<PathElement, String, Offset>(
+            element, remainingPathStr, element.end);
       case 'z':
       case 'Z':
         var element = CloseElement();
         var remainingPathStr = input.substring(commandInterpretation.end);
-        return Tuple2<PathElement, String>(element, remainingPathStr);
+        return Tuple3<PathElement, String, Offset>(
+            element, remainingPathStr, element.end);
+      case 'h':
+      case 'H':
+        var element = HorizontalLineElement(
+            startPoint: startPoint,
+            relative: relativeCommand,
+            targetX: double.parse(commandInterpretation.group(2)!));
+        startPoint = element.end;
+        var remainingPathStr = input.substring(commandInterpretation.end);
+        return Tuple3<PathElement, String, Offset>(
+            element, remainingPathStr, element.end);
+      case 'v':
+      case 'V':
+        var element = VerticalLineElement(
+            startPoint: startPoint,
+            relative: relativeCommand,
+            targetY: double.parse(commandInterpretation.group(2)!));
+        startPoint = element.end;
+        var remainingPathStr = input.substring(commandInterpretation.end);
+        return Tuple3<PathElement, String, Offset>(
+            element, remainingPathStr, element.end);
     }
     return null;
   }
@@ -575,31 +750,52 @@ List<PathElement> parsePath(String pathStr) {
       "^(A|a)$separatorFormat$valueFormat$separatorFormat$valueFormat" +
           "$separatorFormat$valueFormat$separatorFormat$valueFormat$separatorFormat$valueFormat" +
           "$separatorFormat$valueFormat$separatorFormat$valueFormat");
+  var horizontalLineRegex = RegExp("^(H|h)$separatorFormat$valueFormat");
+  var verticalLineRegex = RegExp("^(V|v)$separatorFormat$valueFormat");
   var closeRegex = RegExp("^(z)");
 
   var elementsToReturn = <PathElement>[];
   var remainingPath = pathStr.trim();
 
   while (remainingPath.isNotEmpty) {
-    var moveElementTuple = interpretCommand(moveRegex, remainingPath);
-    var lineElementTuple = interpretCommand(lineRegex, remainingPath);
+    var moveElementTuple =
+        interpretCommand(moveRegex, remainingPath, startPoint);
+    var lineElementTuple =
+        interpretCommand(lineRegex, remainingPath, startPoint);
     var cubicCurveElementTuple =
-        interpretCommand(cubicCurveRegex, remainingPath);
-    var arcElementTuple = interpretCommand(arcRegex, remainingPath);
-    var closeElementTuple = interpretCommand(closeRegex, remainingPath);
+        interpretCommand(cubicCurveRegex, remainingPath, startPoint);
+    var arcElementTuple = interpretCommand(arcRegex, remainingPath, startPoint);
+    var horizontalLineElementTuple =
+        interpretCommand(horizontalLineRegex, remainingPath, startPoint);
+    var verticalLineElementTuple =
+        interpretCommand(verticalLineRegex, remainingPath, startPoint);
+    var closeElementTuple =
+        interpretCommand(closeRegex, remainingPath, startPoint);
 
     if (moveElementTuple != null) {
       elementsToReturn.add(moveElementTuple.item1);
       remainingPath = moveElementTuple.item2.trim();
+      startPoint = moveElementTuple.item1.end;
     } else if (lineElementTuple != null) {
       elementsToReturn.add(lineElementTuple.item1);
       remainingPath = lineElementTuple.item2.trim();
+      startPoint = lineElementTuple.item1.end;
     } else if (cubicCurveElementTuple != null) {
       elementsToReturn.add(cubicCurveElementTuple.item1);
       remainingPath = cubicCurveElementTuple.item2.trim();
+      startPoint = cubicCurveElementTuple.item1.end;
     } else if (arcElementTuple != null) {
       elementsToReturn.add(arcElementTuple.item1);
       remainingPath = arcElementTuple.item2.trim();
+      startPoint = arcElementTuple.item1.end;
+    } else if (horizontalLineElementTuple != null) {
+      elementsToReturn.add(horizontalLineElementTuple.item1);
+      remainingPath = horizontalLineElementTuple.item2.trim();
+      startPoint = horizontalLineElementTuple.item1.end;
+    } else if (verticalLineElementTuple != null) {
+      elementsToReturn.add(verticalLineElementTuple.item1);
+      remainingPath = verticalLineElementTuple.item2.trim();
+      startPoint = verticalLineElementTuple.item1.end;
     } else if (closeElementTuple != null) {
       elementsToReturn.add(closeElementTuple.item1);
       remainingPath = closeElementTuple.item2.trim();
